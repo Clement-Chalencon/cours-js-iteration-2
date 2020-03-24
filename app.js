@@ -55,7 +55,9 @@ function donnees(){
   * Cette liste sera contenu dans la clé communication
   */
 function comms(){
-    return {"communication":[]};
+
+    return {"communication":data.communication};
+
 }
 
 
@@ -68,7 +70,7 @@ function comms(){
   * Cette liste sera contenue dans la clé objects
   */
 function objects(){
-    return {"objects":[]};
+    return {"objects":data.objects};
 }
 
  /**
