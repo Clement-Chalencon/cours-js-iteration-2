@@ -18,17 +18,22 @@ let data = JSON.parse(rawfile);
   * une chaîne de caractères.
   */
 function demarrage(){
-    return "";
+    return "something";
 }
 
  /**
   * Cette fonction est exécutée lorsqu'on demande l'adresse
-  * http://localhost:5000/ représentée par la route '/'.
+  * http://localhost:500np0/ représentée par la route '/'.
   * Elle ne prend pas de paramètres 
   * Elle retourne un objet javascript au format json.
   */
 function home(){
-    return undefined;
+    var jsHero = {
+        "name": "Batman",
+        "homeTown": "Gotham",
+        "secretBase": "BatCave",
+    }
+    return jsHero;
 }
 
  /**
@@ -38,6 +43,7 @@ function home(){
   * Elle retourne un objet javascript contenant toutes les données.
   */
 function donnees(){
+    var 
     return {};
 }
 
