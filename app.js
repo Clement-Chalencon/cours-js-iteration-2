@@ -98,14 +98,13 @@ function types() {
  * Cette liste sera contenu dans la clé formats.
  */
 function formats() {
-    var tab = [];
-
-    for (var prop in data.data_formats) {
-        tab.push(prop);
+    var formats = data.data_formats;
+    var result = [];
+    for (var format in formats) {
+        result.push(formats[format]);
     }
-    
-    console.log(tab);
-    return {'formats': tab};
+    // console.log(result);
+    return { "formats": result };
 }
 
 /**
@@ -117,7 +116,14 @@ function formats() {
  * Cette liste sera contenue dans la clé objects
  */
 function objects_serials() {
-    return { "objects": [] };
+    var result = [];
+    for (var val in data.objects) {
+        // console.log(val);
+        result.push(data.objects[val].serial);
+    }
+
+    // console.log({ "objects": result });
+    return { "objects": result };
 }
 
 /**
@@ -128,29 +134,58 @@ function objects_serials() {
  * l'objet ayant le serial passé en paramètre.
  */
 function get_object_by_serial(serial) {
-    return serial;
+    var obj = data.objects;
+    let res;
+    for (var val in obj) {
+        if (obj[val].serial == serial) {
+            res = obj[val];
+        }
+    }
+    return res;
 }
 
 /**
  * Cette fonction est exécutée lorsqu'on demande l'adresse
  * http://localhost:5000/objects/operator/<operator> représentée par la route '/objects/operator/:operator'
- * Elle prend le serial de l'objet en paramètre.
+ * Elle prend l'opérateur de l'objet en paramètre.
  * Elle retourne un objet javascript contenant une
  * liste des objets ayant l'opérateur passé en paramètre.
  */
 function get_objects_by_operator(operator) {
-    return operator;
+    var obj = data.objects;
+    let res = [];
+    for (var val in obj) {
+        // console.log(operator);
+        if (obj[val].provisionning.operator === operator) {
+            res.push(obj[val]);
+        }
+    }
+    if (res.length === 0) {
+        return undefined;
+    }
+    return { "objects": res };
 }
 
 /**
  * Cette fonction est exécutée lorsqu'on demande l'adresse
  * http://localhost:5000/types/comm/<comm> représentée par la route '/types/comm/:comm'
- * Elle prend le serial de l'objet en paramètre.
+ * Elle prend mode de communication de l'objet en paramètre.
  * Elle retourne un objet javascript contenant une liste de types
  * ayant pour mode de communication celui passé en paramètre.
  */
 function get_types_by_comm(comm) {
-    return comm;
+    let type = data.types;
+    let res = [];
+    for (var val in type) {
+        if (type[val].communication === comm) {
+            res.push(type[val]);
+        }
+    }
+    if (res.length === 0) {
+        return undefined;
+    }
+    return { "types": res };
+
 }
 
 /**
@@ -161,7 +196,20 @@ function get_types_by_comm(comm) {
  * ayant pour un format de données celui passé en paramètre.
  */
 function get_types_by_format(format) {
-    return format;
+    let type = data.types;
+    let res = [];
+    for (var val in type) {
+        for (var el in type[val].sensors) {
+            if (type[val].sensors[el] == format) {
+                res.push(type[val]);
+            }
+        }
+    }
+    if (res.length === 0) {
+        return undefined;
+    }
+    return { "types": res };
+
 }
 
 /**
@@ -172,7 +220,19 @@ function get_types_by_format(format) {
  * ayant pour mode de communication celui passé en paramètre.
  */
 function filter_objects_by_comm(comm) {
-    return comm;
+    let type = data.types;
+    let res = [];
+    for (var val in type) {
+        for (var el in type[val].sensors) {
+            if (type[val].sensors[el] == format) {
+                res.push(type[val]);
+            }
+        }
+    }
+    if (res.length === 0) {
+        return undefined;
+    }
+    return { "object": res };
 }
 
 /**

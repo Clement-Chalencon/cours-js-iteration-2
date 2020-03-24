@@ -178,28 +178,28 @@ test("la fonction filter_objects_by_comm retourne la liste d'objets demandée",(
 test("la fonction filter_objects_by_data_type retourne la liste d'objets demandée",()=>{
     const f = app.filter_objects_by_data_type;
     assert.equal(f("typenull"), undefined);
-    assert.notEqual(f("string"), undefined);
-    assert.equal(f("number"), 'object');
-    assert.equal(f("boolean"), 'object');
+    assert.notEqual(f("boolean"), undefined);
+    assert.equal(typeof f("number"), 'object');
+    assert.equal(typeof f("boolean"), 'object');
     assert.equal(Object.keys(f("number")).length, 1);
     assert.equal(Object.keys(f("boolean")).length, 1);
     assert.equal(Object.keys(f("number"))[0], "objects");
     assert.equal(Object.keys(f("boolean"))[0], "objects");
-    assert.equal(Object.keys(f("number").objects).length,9);
-    assert.equal(Object.keys(f("boolean").objects).length,9);
-    assert.notEqual(Object.keys(f("boolean").objects).indexOf("sensors"),-1);
-    assert.notEqual(Object.keys(f("number").objects).indexOf("sensors"),-1);
+    assert.equal(Object.keys(f("number").objects).length,11);
+    assert.equal(Object.keys(f("boolean").objects).length,1);
+    assert.notEqual(Object.keys(f("boolean").objects[0]).indexOf("sensors"),-1);
+    assert.notEqual(Object.keys(f("number").objects[0]).indexOf("sensors"),-1);
 });
 
 test('la fonction get_full_object_by_serial renvoie l\'objet et tout ses détails',()=>{
     const f = app.get_full_object_by_serial;
     assert.equal(f("12345"), undefined);
-    assert.equal(typeof (f("OBJ_009")), 'object' );
-    assert.equal(Object.keys(f("OBJ_04"))[0], "objects");
-    assert.notEqual(Object.keys(f("OBJ_008").objects).indexOf("sensors"),-1);
-    assert.notEqual(Object.keys(f("OBJ_011").objects.sensors[0]).indexOf("data_unit"),-1);
-    assert.notEqual(Object.keys(f("OBJ_003").objects.sensors[0]).indexOf("data_type"),-1);
-    assert.notEqual(Object.keys(f("OBJ_007").objects).indexOf("communication"),-1);
-    assert.notEqual(Object.keys(f("OBJ_007").objects).indexOf("default_image"),-1);
-    assert.equal(f("OBJ_009").object.description,"Capteur de mesure du CO2 de la salle de cours du Campus de Chambéry");
+    assert.equal(typeof f("OBJ_009"), 'object');
+    assert.equal(Object.keys(f("OBJ_004"))[0], "serial");
+    assert.notEqual(Object.keys(f("OBJ_008")).indexOf("sensors"),-1);
+    assert.notEqual(Object.keys(f("OBJ_011").sensors['distance']).indexOf("unit"),-1);
+    assert.notEqual(Object.keys(f("OBJ_003").sensors['humidity']).indexOf("data_type"),-1);
+    assert.notEqual(Object.keys(f("OBJ_007")).indexOf("communication"),-1);
+    assert.notEqual(Object.keys(f("OBJ_007")).indexOf("default_image"),-1);
+    assert.equal(f("OBJ_009").description,"Capteur de mesure du CO2 de la salle de cours du Campus de Chambéry");
 });
