@@ -198,10 +198,10 @@ function get_types_by_comm(comm) {
 function get_types_by_format(format) {
     let type = data.types;
     let res = [];
-    for (var val in type) {
-        for (var el in type[val].sensors) {
-            if (type[val].sensors[el] == format) {
-                res.push(type[val]);
+    for (var val1 in type) {
+        for (var val2 in type[val1].sensors) {
+            if (type[val1].sensors[val2] == format) {
+                res.push(type[val1]);
             }
         }
     }
@@ -209,30 +209,39 @@ function get_types_by_format(format) {
         return undefined;
     }
     return { "types": res };
-
 }
 
 /**
  * Cette fonction est exécutée lorsqu'on demande l'adresse
  * http://localhost:5000/objects/comm/<comm> représentée par la route '/objects/comm/:comm'
- * Elle prend le serial de l'objet en paramètre.
+ * Elle prend le mode de communication de l'objet en paramètre.
  * Elle retourne un objet javascript contenant une liste d'objets
  * ayant pour mode de communication celui passé en paramètre.
  */
 function filter_objects_by_comm(comm) {
+    let obj = data.objects;
     let type = data.types;
     let res = [];
-    for (var val in type) {
-        for (var el in type[val].sensors) {
-            if (type[val].sensors[el] == format) {
-                res.push(type[val]);
+    for (var key in type) {
+        // console.log('1ere boucle' + key);
+        if (type[key].communication === comm) { //"wifi" comm
+            // console.log('1ere condition' + key);
+            for (var key2 in obj){
+                // console.log('2eme boucle' + obj[key2].type);
+                if(obj[key2].type === key){
+                console.log('2eme condition ' + obj[key2].type +' = ' + key);
+                res.push(type[key2]);
+                }
             }
         }
     }
+
     if (res.length === 0) {
+        console.log('res vide');
         return undefined;
     }
-    return { "object": res };
+    return { "objects": res };
+
 }
 
 /**
