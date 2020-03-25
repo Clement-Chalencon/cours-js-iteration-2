@@ -226,18 +226,18 @@ function filter_objects_by_comm(comm) {
         // console.log('1ere boucle' + key);
         if (type[key].communication === comm) { //"wifi" comm
             // console.log('1ere condition' + key);
-            for (var key2 in obj){
+            for (var key2 in obj) {
                 // console.log('2eme boucle' + obj[key2].type);
-                if(obj[key2].type === key){
-                console.log('2eme condition ' + obj[key2].type +' = ' + key);
-                res.push(type[key2]);
+                if (obj[key2].type === key) {
+                    // console.log('2eme condition ' + obj[key2].type +' = ' + key);
+                    res.push(type[key2]);
                 }
             }
         }
     }
 
     if (res.length === 0) {
-        console.log('res vide');
+        // console.log('res vide');
         return undefined;
     }
     return { "objects": res };
@@ -253,7 +253,49 @@ function filter_objects_by_comm(comm) {
  * du même type que celui passé en paramètre.
  */
 function filter_objects_by_data_type(data_type) {
-    return data_type;
+    let obj = data.objects;
+    let type = data.types;
+    let format = data.data_formats;
+    let res = [];
+    for (var key in format) {
+        // console.log(format[key].data_type);
+        // console.log(key);
+        if (format[key].data_type === data_type) { //"boolean"
+            console.log(key);
+            for (var key2 in type) {
+                for (var key3 in type[key2].sensors) {
+                    if (type[key2].sensors[key3] == key) {
+                        console.log(type[key2].sensors[key3] + ' ==  ' + key);
+                        // console.log(key2);
+                        for (var key4 in obj) {
+                            // console.log('2eme boucle' + obj[key2].type);
+                            if (obj[key4].type === key2) {
+                                var exist = false;
+                                for (var e in res){
+                                    if(res[e] == obj[key4]){
+                                        exist = true;
+                                    }
+                                }
+                                if (!exist){
+                                    console.log('3eme condition ' + obj[key4].type +' = ' + key2)
+                                    // console.log(key4);
+                                    obj[key4]["sensors"] = type[key2].sensors;
+                                    res.push(obj[key4]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+    console.log(res);
+    if (res.length == 0) {
+        console.log('res vide');
+        return undefined;
+    }
+    return { "objects": res };
 }
 
 /**
