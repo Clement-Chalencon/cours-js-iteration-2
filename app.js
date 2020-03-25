@@ -261,23 +261,23 @@ function filter_objects_by_data_type(data_type) {
         // console.log(format[key].data_type);
         // console.log(key);
         if (format[key].data_type === data_type) { //"boolean"
-            console.log(key);
+            // console.log(key);
             for (var key2 in type) {
                 for (var key3 in type[key2].sensors) {
                     if (type[key2].sensors[key3] == key) {
-                        console.log(type[key2].sensors[key3] + ' ==  ' + key);
+                        // console.log(type[key2].sensors[key3] + ' ==  ' + key);
                         // console.log(key2);
                         for (var key4 in obj) {
                             // console.log('2eme boucle' + obj[key2].type);
                             if (obj[key4].type === key2) {
                                 var exist = false;
-                                for (var e in res){
-                                    if(res[e] == obj[key4]){
+                                for (var e in res) {
+                                    if (res[e] == obj[key4]) {
                                         exist = true;
                                     }
                                 }
-                                if (!exist){
-                                    console.log('3eme condition ' + obj[key4].type +' = ' + key2)
+                                if (!exist) {
+                                    // console.log('3eme condition ' + obj[key4].type +' = ' + key2)
                                     // console.log(key4);
                                     obj[key4]["sensors"] = type[key2].sensors;
                                     res.push(obj[key4]);
@@ -290,9 +290,9 @@ function filter_objects_by_data_type(data_type) {
 
         }
     }
-    console.log(res);
+    // console.log(res);
     if (res.length == 0) {
-        console.log('res vide');
+        // console.log('res vide');
         return undefined;
     }
     return { "objects": res };
@@ -307,7 +307,43 @@ function filter_objects_by_data_type(data_type) {
  * Les types de données des sensors et autres informations seront regroupé dans la clé sensors de l'objet.
  */
 function get_full_object_by_serial(serial) {
-    return serial;
+    let obj = data.objects;
+    let type = data.types;
+    let format = data.data_formats;
+    let res = [];
+    let objJS = {}
+    let objFinal = {}
+    for (let key in obj) {
+        if (obj[key].serial === serial) { // "OBJ_001" serial
+            // console.log(key);
+            for (key2 in type) {
+                if (obj[key].type == key2) {
+                    for (key3 in format) {
+                        for (var i = 0; i < type[key2].sensors.length; i++) {
+                            if (type[key2].sensors[i] == key3) {
+                                objJS[type[key2].sensors[i]] = format[key3];
+                                // console.log(objJS);
+                                obj[key]["default_image"] = type[key2].default_image;
+                                obj[key]["communication"] = type[key2].communication;
+                                obj[key]["sensors"] = objJS;
+                                console.log(obj[key]);
+                                res.push(obj[key]);
+                                // objFinal[obj[key].serial] = obj[key];
+                                // console.log(objFinal);
+                                // res.push(objFinal);       
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    if (res.length == 0) {
+        return undefined;
+    }
+    return  {'objects': res}; //objFinal;  //
 }
 
 /**
