@@ -1,0 +1,49 @@
+body{
+    color:whitesmoke;
+}
+
+#nav{
+    background-color: #212121;
+}
+
+#content {
+    background-color: #212121;
+
+}
+.card-header{
+    background-color: #0d7377
+}
+
+.card-body {
+    background-color: #323232;
+}
+
+#side {
+    background-color: #323232;
+}
+
+.sidebar i, p{
+    color:whitesmoke;
+}
+
+.brand-link{
+    color:whitesmoke;
+}
+
+.nav-item i{
+    color:whitesmoke;
+}
+
+#footer {
+    background-color: #212121;
+    color :whitesmoke
+
+}
+
+#footer a{
+    color :#14ffec
+}
+
+.imgType {
+    height:150px;
+}
