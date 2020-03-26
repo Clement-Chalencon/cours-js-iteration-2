@@ -194,9 +194,10 @@ test("la fonction filter_objects_by_data_type retourne la liste d'objets demandÃ
 test('la fonction get_full_object_by_serial renvoie l\'objet et tous ses dÃ©tails',()=>{
     const f = app.get_full_object_by_serial;
     assert.equal(f("12345"), undefined);
+    console.log(f("OBJ_004"));
     assert.equal(typeof f("OBJ_009"), 'object');
-    // assert.equal(f("OBJ_004").hasOwnProperty("serial"), true);
-    // assert.notEqual(Object.keys(f("OBJ_008")).indexOf("sensors"),-1);
+    assert.equal(f("OBJ_004").hasOwnProperty("serial"), true);
+    assert.notEqual(Object.keys(f("OBJ_008")).indexOf("sensors"),-1);
     assert.notEqual(Object.keys(f("OBJ_011").sensors['distance']).indexOf("unit"),-1);
     assert.notEqual(Object.keys(f("OBJ_003").sensors['humidity']).indexOf("data_type"),-1);
     assert.notEqual(Object.keys(f("OBJ_007")).indexOf("communication"),-1);

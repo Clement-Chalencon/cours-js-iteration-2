@@ -28,7 +28,7 @@ function demarrage() {
  * Elle retourne un objet javascript au format json.
  */
 function home() {
-    var jsHero = {
+    let jsHero = {
         "name": "Batman",
         "homeTown": "Gotham",
         "secretBase": "BatCave",
@@ -82,8 +82,8 @@ function objects() {
  * Cette liste sera contenu dans la clé types
  */
 function types() {
-    var tab = [];
-    for (var prop in data.types) {
+    let tab = [];
+    for (let prop in data.types) {
         tab.push(data.types[prop]);
     }
     return { 'types': tab };
@@ -98,9 +98,9 @@ function types() {
  * Cette liste sera contenu dans la clé formats.
  */
 function formats() {
-    var formats = data.data_formats;
-    var result = [];
-    for (var format in formats) {
+    let formats = data.data_formats;
+    let result = [];
+    for (let format in formats) {
         result.push(formats[format]);
     }
     // console.log(result);
@@ -116,8 +116,8 @@ function formats() {
  * Cette liste sera contenue dans la clé objects
  */
 function objects_serials() {
-    var result = [];
-    for (var val in data.objects) {
+    let result = [];
+    for (let val in data.objects) {
         // console.log(val);
         result.push(data.objects[val].serial);
     }
@@ -134,9 +134,9 @@ function objects_serials() {
  * l'objet ayant le serial passé en paramètre.
  */
 function get_object_by_serial(serial) {
-    var obj = data.objects;
+    let obj = data.objects;
     let res;
-    for (var val in obj) {
+    for (let val in obj) {
         if (obj[val].serial == serial) {
             res = obj[val];
         }
@@ -152,9 +152,9 @@ function get_object_by_serial(serial) {
  * liste des objets ayant l'opérateur passé en paramètre.
  */
 function get_objects_by_operator(operator) {
-    var obj = data.objects;
+    let obj = data.objects;
     let res = [];
-    for (var val in obj) {
+    for (let val in obj) {
         // console.log(operator);
         if (obj[val].provisionning.operator === operator) {
             res.push(obj[val]);
@@ -176,7 +176,7 @@ function get_objects_by_operator(operator) {
 function get_types_by_comm(comm) {
     let type = data.types;
     let res = [];
-    for (var val in type) {
+    for (let val in type) {
         if (type[val].communication === comm) {
             res.push(type[val]);
         }
@@ -198,8 +198,8 @@ function get_types_by_comm(comm) {
 function get_types_by_format(format) {
     let type = data.types;
     let res = [];
-    for (var val1 in type) {
-        for (var val2 in type[val1].sensors) {
+    for (let val1 in type) {
+        for (let val2 in type[val1].sensors) {
             if (type[val1].sensors[val2] == format) {
                 res.push(type[val1]);
             }
@@ -222,11 +222,11 @@ function filter_objects_by_comm(comm) {
     let obj = data.objects;
     let type = data.types;
     let res = [];
-    for (var key in type) {
+    for (let key in type) {
         // console.log('1ere boucle' + key);
         if (type[key].communication === comm) { //"wifi" comm
             // console.log('1ere condition' + key);
-            for (var key2 in obj) {
+            for (let key2 in obj) {
                 // console.log('2eme boucle' + obj[key2].type);
                 if (obj[key2].type === key) {
                     // console.log('2eme condition ' + obj[key2].type +' = ' + key);
@@ -257,21 +257,21 @@ function filter_objects_by_data_type(data_type) {
     let type = data.types;
     let format = data.data_formats;
     let res = [];
-    for (var key in format) {
+    for (let key in format) {
         // console.log(format[key].data_type);
         // console.log(key);
         if (format[key].data_type === data_type) { //"boolean"
             // console.log(key);
-            for (var key2 in type) {
-                for (var key3 in type[key2].sensors) {
+            for (let key2 in type) {
+                for (let key3 in type[key2].sensors) {
                     if (type[key2].sensors[key3] == key) {
                         // console.log(type[key2].sensors[key3] + ' ==  ' + key);
                         // console.log(key2);
-                        for (var key4 in obj) {
+                        for (let key4 in obj) {
                             // console.log('2eme boucle' + obj[key2].type);
                             if (obj[key4].type === key2) {
-                                var exist = false;
-                                for (var e in res) {
+                                let exist = false;
+                                for (let e in res) {
                                     if (res[e] == obj[key4]) {
                                         exist = true;
                                     }
@@ -307,44 +307,114 @@ function filter_objects_by_data_type(data_type) {
  * Les types de données des sensors et autres informations seront regroupé dans la clé sensors de l'objet.
  */
 function get_full_object_by_serial(serial) {
+
     let obj = data.objects;
     let type = data.types;
     let format = data.data_formats;
-    let res = [];
-    let objJS = {}
+    let serialType;
     let objFinal = {}
-    for (let key in obj) {
-        if (obj[key].serial === serial) { // "OBJ_001" serial
-            // console.log(key);
-            for (key2 in type) {
-                if (obj[key].type == key2) {
-                    for (key3 in format) {
-                        for (var i = 0; i < type[key2].sensors.length; i++) {
-                            if (type[key2].sensors[i] == key3) {
-                                objJS[type[key2].sensors[i]] = format[key3];
-                                // console.log(objJS);
-                                obj[key]["default_image"] = type[key2].default_image;
-                                obj[key]["communication"] = type[key2].communication;
-                                obj[key]["sensors"] = objJS;
-                                console.log(obj[key]);
-                                res.push(obj[key]);
-                                // objFinal[obj[key].serial] = obj[key];
-                                // console.log(objFinal);
-                                // res.push(objFinal);       
-                            }
-                        }
-                    }
+    let res = {};
+    let objJS = {}
 
-                }
+
+    // récupération des données de l'objet et fonction du sérial
+    for (let key in obj) {
+        if (obj[key].serial === "OBJ_010") { // "OBJ_001" serial
+            serialType = obj[key].type
+            objFinal = obj[key];
+        }
+    }
+
+    // ajout des attributs default_image et communication
+    for (key2 in type) {
+        if (serialType == key2) {
+            objFinal["default_image"] = type[key2].default_image;
+            objFinal["communication"] = type[key2].communication;
+            objFinal["sensors"] = type[key2].sensors;
+        }
+    }
+
+    for (key3 in format) {
+        for (let sens in objFinal["sensors"]) {
+            if (objFinal["sensors"][sens] = key3) {
+                console.log(objFinal["sensors"][sens]);
+                console.log(npùmkey3);
+                console.log('boucle putain')
             }
         }
     }
 
+
+
+
+    // for (key3 in format) {
+    // for (let i = 0; i < type[serialType].sensors.length; i++) {
+    //     console.log(i);
+    //     if (type[key2].sensors[i] == key3) {
+    //         objJS[type[key2].sensors[i]] = format[key3];
+    //         obj[key]["sensors"][i] = objJS[type[key2].sensors[i]];
+    //     }
+    // }
+    // }
+
+    console.log(objFinal);
+
+
+
+
+
+    // for (key3 in format) {
+    //     for (let i = 0; i < type[key2].sensors.length; i++) {
+    //         if (type[key2].sensors[i] == key3) {
+    //             objJS[type[key2].sensors[i]] = format[key3];
+    //             obj[key]["sensors"][i]=objJS[type[key2].sensors[i]];
+    //         }
+    //     }
+    // }
+    // // console.log(objJS);
+    // obj[key]["default_image"] = type[key2].default_image;
+    // obj[key]["communication"] = type[key2].communication;
+    // // obj[key]["sensors"] = objJS;
+    // objetFinal = obj[key];
+    // console.log(objetFinal);
+    // // console.log(objJS);
+
+    //                 // objFinal[obj[key].serial] = obj[key];
+    //                 // console.log(objFinal);
+    //                 // res.push(objFinal);   
+    //                 let exist = false;
+    //                 for (let e in res) {
+    //                     if (res[e] == obj[key]) {
+    //                         exist = true;
+    //                         console.log('existe déja');
+    //                     }
+    //                 }
+    //                 if (!exist) {
+    //                     console.log('existe pas');
+    //                     obj[key]["default_image"] = type[key2].default_image;
+    //                     obj[key]["communication"] = type[key2].communication;
+    //                     obj[key]["sensors"] = objJS;
+    //                     objFinal = obj[key];
+    //                     // console.log(obj[key]);
+    //                     // res.push(obj[key]);
+    //                     // console.log('ajoute 1');
+    //                     res.push(1);
+    //                 }
+
+
+    //         }
+    //     }
+    // }
+    //     }
+    console.log('NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
+    console.log(objetFinal);
     if (res.length == 0) {
+        // console.log('res vide');
         return undefined;
     }
-    return  {'objects': res}; //objFinal;  //
+    return { "objects": res };
 }
+
 
 /**
  * À partir de ce commentaire ne rien modifier.

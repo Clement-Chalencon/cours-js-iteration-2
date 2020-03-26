@@ -1,3 +1,4 @@
+load_components();
 
 /**
  * Fonction à appeler au chargement de la page
@@ -9,4 +10,3 @@ function load_components(){
     console.log("Chargement des données de la page");
     // Ajouter ici le code permettant de charger dynamiquement les éléments de la page
 }
-

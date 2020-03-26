@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" onload="load_components()"> <!-- <fonction non appelée> -->
 
 <head>
     <meta charset="utf-8">
@@ -15,10 +15,16 @@
     <link rel="stylesheet" href="/static/adminlte/dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <script> // fonction non appelée
+        if (document.addEventListener) {
+            document.addEventListener('load', load_components(), false);
+        } else {
+            document.attachEvent('onload', load_components());
+        }
 
+    </script>
 </head>
-
-<body>
+<body onload="load_components()"> <!-- <fonction appelée> -->
     <div class="wrapper" id="wrapper">
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light" id="nav">
@@ -57,18 +63,18 @@
                             </a>
                             <ul class="nav nav-treeview" style="display: none;">
                                 <li class="nav-item">
-                                  <a href="/examples/modal.html" class="nav-link">
-                                    <i class="fas fa-pager nav-icon"></i>
-                                    <p>Modale</p>
-                                  </a>
+                                    <a href="/examples/modal.html" class="nav-link">
+                                        <i class="fas fa-pager nav-icon"></i>
+                                        <p>Modale</p>
+                                    </a>
                                 </li>
                                 <li class="nav-item">
-                                  <a href="/examples/tri.html" class="nav-link">
-                                    <i class="fas fa-random nav-icon"></i>
-                                    <p>Tri</p>
-                                  </a>
+                                    <a href="/examples/tri.html" class="nav-link">
+                                        <i class="fas fa-random nav-icon"></i>
+                                        <p>Tri</p>
+                                    </a>
                                 </li>
-                            </ul>                  
+                            </ul>
                         </li>
                     </ul>
                 </nav>
@@ -160,11 +166,21 @@
     <script src="/static/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE -->
     <script src="/static/adminlte/dist/js/adminlte.js"></script>
+    <!-- script JS -->
 
+    <script src="/static/js/objects.js"></script>
+    <script>
+        load_components(); //fonction appelée
+    </script>
+    <script> // fonction appelée
+        if (window.addEventListener) {
+            window.addEventListener('load', load_components(), false);
+        } else {
+            window.attachEvent('onload', load_components());
+        }
 
-    <!-- 
-        Ajouter votre script javascript personnélisé ici 
-    -->
+    </script>
+    
 
 </body>
 
