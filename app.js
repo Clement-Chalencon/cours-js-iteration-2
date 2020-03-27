@@ -86,6 +86,7 @@ function types() {
     for (let prop in data.types) {
         tab.push(data.types[prop]);
     }
+    console.log(tab)
     return { 'types': tab };
 }
 
@@ -319,7 +320,7 @@ function get_full_object_by_serial(serial) {
 
     // récupération des données de l'objet et fonction du sérial
     for (let key in obj) {
-        if (obj[key].serial === "OBJ_010") { // "OBJ_001" serial
+        if (obj[key].serial === "OBJ_001") { // "OBJ_001" serial
             serialType = obj[key].type
             objFinal = obj[key];
         }
@@ -331,20 +332,23 @@ function get_full_object_by_serial(serial) {
             objFinal["default_image"] = type[key2].default_image;
             objFinal["communication"] = type[key2].communication;
             objFinal["sensors"] = type[key2].sensors;
+            console.log(type[key2].sensors);
         }
     }
 
-    for (key3 in format) {
-        for (let sens in objFinal["sensors"]) {
-            if (objFinal["sensors"][sens] = key3) {
-                console.log(objFinal["sensors"][sens]);
-                console.log(npùmkey3);
-                console.log('boucle putain')
+
+    for (let sensIndex in objFinal["sensors"]) {
+        for (key3 in format) {
+            if (objFinal["sensors"][sensIndex] = key3) {
+                // console.log(objFinal["sensors"][sensIndex]);
+                // console.log(key3);
+                // console.log(sensIndex);
             }
         }
     }
-
-
+    console.log(objFinal);
+ 
+    // console.log(objFinal);
 
 
     // for (key3 in format) {
@@ -357,7 +361,7 @@ function get_full_object_by_serial(serial) {
     // }
     // }
 
-    console.log(objFinal);
+
 
 
 
@@ -446,11 +450,13 @@ app.get('/types/format/:format', route(get_types_by_format));
 function route(fun) {
     return function (req, res) {
         if (Object.keys(req.params).length !== 0) {
-            res.send(fun(req.params));
+            res.json(fun(Object.values(req.params)[0]));
         }
         return res.send(fun());
     }
 }
+
+
 
 const port = process.argv[2] == "-u" ? 5001 : process.argv[2];
 app.listen(port, function () {
