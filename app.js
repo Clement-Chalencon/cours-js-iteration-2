@@ -86,7 +86,7 @@ function types() {
     for (let prop in data.types) {
         tab.push(data.types[prop]);
     }
-    console.log(tab)
+    // console.log(tab)
     return { 'types': tab };
 }
 
@@ -188,6 +188,7 @@ function get_types_by_comm(comm) {
     return { "types": res };
 
 }
+
 
 /**
  * Cette fonction est exécutée lorsqu'on demande l'adresse
@@ -309,114 +310,63 @@ function filter_objects_by_data_type(data_type) {
  */
 function get_full_object_by_serial(serial) {
 
-    let obj = data.objects;
     let type = data.types;
     let format = data.data_formats;
-    let serialType;
-    let objFinal = {}
-    let res = {};
-    let objJS = {}
+    let objFinal = {};
+    let objSensors = {};
 
+    if (!isEmpty(get_object_by_serial("serial"))); {
+        
+        // récupération des données de l'objet avec le sérial
+        objFinal = get_object_by_serial("serial"); // "OBJ_003"
 
-    // récupération des données de l'objet et fonction du sérial
-    for (let key in obj) {
-        if (obj[key].serial === "OBJ_001") { // "OBJ_001" serial
-            serialType = obj[key].type
-            objFinal = obj[key];
-        }
-    }
-
-    // ajout des attributs default_image et communication
-    for (key2 in type) {
-        if (serialType == key2) {
-            objFinal["default_image"] = type[key2].default_image;
-            objFinal["communication"] = type[key2].communication;
-            objFinal["sensors"] = type[key2].sensors;
-            console.log(type[key2].sensors);
-        }
-    }
-
-
-    for (let sensIndex in objFinal["sensors"]) {
-        for (key3 in format) {
-            if (objFinal["sensors"][sensIndex] = key3) {
-                // console.log(objFinal["sensors"][sensIndex]);
-                // console.log(key3);
-                // console.log(sensIndex);
+        // ajout des attributs default_image et communication
+        for (let keyType in type) {
+            if (objFinal.type == keyType) {
+                objFinal["default_image"] = type[keyType].default_image;
+                objFinal["communication"] = type[keyType].communication;
             }
         }
+
+        //ajouts des formats pour les sensors
+        for (let keySensors in objFinal["sensors"]) {
+            for (let keyFormat in format) {
+                if (objFinal["sensors"][keySensors] == keyFormat) {
+                    objSensors[keyFormat] = format[keyFormat];
+                }
+            }
+        }
+        objFinal["sensors"] = objSensors;
     }
-    console.log(objFinal);
- 
-    // console.log(objFinal);
 
+    if (isEmpty(objFinal)) return undefined;
+    
+    return objFinal;
+}
 
-    // for (key3 in format) {
-    // for (let i = 0; i < type[serialType].sensors.length; i++) {
-    //     console.log(i);
-    //     if (type[key2].sensors[i] == key3) {
-    //         objJS[type[key2].sensors[i]] = format[key3];
-    //         obj[key]["sensors"][i] = objJS[type[key2].sensors[i]];
-    //     }
-    // }
-    // }
+function isEmpty(obj) {
 
+    // null and undefined are "empty"
+    if (obj == null) return true;
 
+    // Assume if it has a length property with a non-zero value
+    // that that property is correct.
+    if (obj.length > 0) return false;
+    if (obj.length === 0) return true;
 
+    // If it isn't an object at this point
+    // it is empty, but it can't be anything *but* empty
+    // Is it empty?  Depends on your application.
+    if (typeof obj !== "object") return true;
 
-
-
-
-    // for (key3 in format) {
-    //     for (let i = 0; i < type[key2].sensors.length; i++) {
-    //         if (type[key2].sensors[i] == key3) {
-    //             objJS[type[key2].sensors[i]] = format[key3];
-    //             obj[key]["sensors"][i]=objJS[type[key2].sensors[i]];
-    //         }
-    //     }
-    // }
-    // // console.log(objJS);
-    // obj[key]["default_image"] = type[key2].default_image;
-    // obj[key]["communication"] = type[key2].communication;
-    // // obj[key]["sensors"] = objJS;
-    // objetFinal = obj[key];
-    // console.log(objetFinal);
-    // // console.log(objJS);
-
-    //                 // objFinal[obj[key].serial] = obj[key];
-    //                 // console.log(objFinal);
-    //                 // res.push(objFinal);   
-    //                 let exist = false;
-    //                 for (let e in res) {
-    //                     if (res[e] == obj[key]) {
-    //                         exist = true;
-    //                         console.log('existe déja');
-    //                     }
-    //                 }
-    //                 if (!exist) {
-    //                     console.log('existe pas');
-    //                     obj[key]["default_image"] = type[key2].default_image;
-    //                     obj[key]["communication"] = type[key2].communication;
-    //                     obj[key]["sensors"] = objJS;
-    //                     objFinal = obj[key];
-    //                     // console.log(obj[key]);
-    //                     // res.push(obj[key]);
-    //                     // console.log('ajoute 1');
-    //                     res.push(1);
-    //                 }
-
-
-    //         }
-    //     }
-    // }
-    //     }
-    console.log('NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
-    console.log(objetFinal);
-    if (res.length == 0) {
-        // console.log('res vide');
-        return undefined;
+    // Otherwise, does it have any properties of its own?
+    // Note that this doesn't handle
+    // toString and valueOf enumeration bugs in IE < 9
+    for (var key in obj) {
+        if (hasOwnProperty.call(obj, key)) return false;
     }
-    return { "objects": res };
+
+    return true;
 }
 
 

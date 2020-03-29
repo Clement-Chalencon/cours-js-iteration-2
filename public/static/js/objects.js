@@ -1,27 +1,10 @@
-/**
- * Fonction à appeler au chargement de la page
- * Cette fonction devra exécuter les actions suivantes :
- *    - charger la liste des objets depuis l'API
- *    - charger les données des objets dans la table
- */
-let data_object = {
-    "serial": "OBJ_004",
-    "type": "raspberry_TH",
-    "image": "raspberry-pi-4.jpg",
-    "description": "Capteur de température et d'humidité de la salle de cours du Campus d'Annecy",
-    "location": "45.907998, 6.102729",
-    "refresh": 5,
-    "status": true,
-    "provisionning": {
-        "date": "2020-03-20",
-        "operator": "JPA"
-    }
-}
+//
+// ─── SCRIPT JS ──────────────────────────────────────────────────────────────────
+//
 
-
-load_default_image("raspberry_TH","OBJ_001");
 load_components();
 
+    
 function load_components() {
     $.get("/data", function (data) {
         for (let key of data.objects) {
@@ -31,38 +14,46 @@ function load_components() {
 
 }
 
-function load_default_image(type,serial) {
+function load_default_image(type, serial) {
     let img;
-    $.get("/data",function (data) {
+    $.get("/data", function (data) {
         for (let key in data.types) {
             if (key == type) {
                 img = data.types[key].default_image;
-                console.log('type : ' + type + 'serial : ' + serial);
-                $('td:contains('+serial+')').next().children().attr('src', '/static/images/'+img, 'alt','image_par_defaut');
-
+                // document.getElementById('imgOBJ_009').innerHTML=`<img class="imgType" id="img`+ data.serial +`" src="/static/images/`+ img + `">`;
+                // document.querySelector('#imgOBJ_009').innerHTML=`<img class="imgType" id="img`+ data.serial +`" src="/static/images/`+ img + `">`;
+                // $('td:contains(' + serial + ')').next().children().attr('src', '/static/images/' + img, 'alt', 'image_par_defaut');
+                let tabOfTd = document.getElementById('table_body').children;
+                for (let i = 0; i < (tabOfTd.length - 1); i++) { //obligé de passer par un compteur pour faire sauter le dernier enfant de table_body qui ne contient rien
+                    if (tabOfTd[i].children[0].textContent == serial) {
+                        tabOfTd[i].children[1].innerHTML = `<img class="imgType" id="img` + data.serial + `" src="/static/images/` + img + `">`;
+                    }
+                }
             }
         }
     });
 }
 
+
+
+
+
 function add_line_to_table(data) {
-    let image;
-    image = data.image;
-    if (data["image"] == undefined) {
-        load_default_image(data.type, data.serial);
-    }
+    let image = data.image;
+    let check = '';
+    if (data["image"] == undefined) load_default_image(data.type, data.serial);
+    if (data.status) check = "checked";
     let line = `
-    <tr>
-        <td>`+ data.serial + `</td>
-        <td><img class="imgType" src="/static/images/`+ image + `"></td>
-        <td>`+ data.description + `</td>
+    <tr class="object_line">
+        <td class="serial_number">${data.serial}</td>
+        <td id="img${data.serial}"><img class="imgType" src="/static/images/${image}"></td>
+        <td>${data.description}</td>
         <td><div class="form-check">
-            <input class="form-check-input" type="checkbox" value="`+ data.status + `" id="defaultCheck1">
+            <input class="form-check-input" type="checkbox" value="${data.status}" id="defaultCheck${data.serial}" ${check}>
             <label class="form-check-label" for="defaultCheck1">
-                checkbox
+                Status
             </label></td>
     <td><button type="button" class="btn btn-info">détail</button></td>
-    </tr>`
+    </tr>`;
     document.getElementById('table_body').innerHTML += line;
-    // document.getElementById('table_body').innerHTML(line);
 }
