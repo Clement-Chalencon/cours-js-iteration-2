@@ -14,9 +14,16 @@ body{
     background-color: #0d7377
 }
 
+
+
 .card-body {
     background-color: #323232;
 }
+
+.cardModal{
+    background-color: white !important;
+}
+
 
 #side {
     background-color: #323232;
@@ -41,9 +48,17 @@ body{
 }
 
 #footer a{
-    color :#14ffec
+    color :#0d7377
 }
 
 .imgType {
     height:150px;
+}
+
+.modal {
+    color:#212121;
+}
+
+.modal-body p{
+    color:#212121;
 }

@@ -20,15 +20,30 @@ function load_default_image(type, serial) {
         for (let key in data.types) {
             if (key == type) {
                 img = data.types[key].default_image;
+            
+                // solution Jquery
+                // $('td:contains(' + serial + ')').next().children().attr('src', '/static/images/' + img, 'alt', 'image_par_defaut');
+                
+                // solutions vanilla avec ID
                 // document.getElementById('imgOBJ_009').innerHTML=`<img class="imgType" id="img`+ data.serial +`" src="/static/images/`+ img + `">`;
                 // document.querySelector('#imgOBJ_009').innerHTML=`<img class="imgType" id="img`+ data.serial +`" src="/static/images/`+ img + `">`;
-                // $('td:contains(' + serial + ')').next().children().attr('src', '/static/images/' + img, 'alt', 'image_par_defaut');
+                
+                // solution vanilla Clem
                 let tabOfTd = document.getElementById('table_body').children;
                 for (let i = 0; i < (tabOfTd.length - 1); i++) { //obligé de passer par un compteur pour faire sauter le dernier enfant de table_body qui ne contient rien
                     if (tabOfTd[i].children[0].textContent == serial) {
                         tabOfTd[i].children[1].innerHTML = `<img class="imgType" id="img` + data.serial + `" src="/static/images/` + img + `">`;
                     }
                 }
+
+                // Solution vanilla Dnis
+                // let fullTd = document.getElementsByTagName('td');
+                // for(let i = 0; i< fullTd.length; i++){
+                //     if (fullTd[i].innerHTML.indexOf(serial) !== -1){
+                //         fullTd[i+1].innerHTML= `<img class="imgType" id="img` + serial + `" src="/static/images/` + img + `">`;
+                //         break;
+                //     }
+                // }
             }
         }
     });

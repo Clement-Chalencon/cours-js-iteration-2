@@ -316,7 +316,7 @@ function get_full_object_by_serial(serial) {
     let objSensors = {};
 
     if (!isEmpty(get_object_by_serial("serial"))); {
-        
+
         // récupération des données de l'objet avec le sérial
         objFinal = get_object_by_serial("serial"); // "OBJ_003"
 
