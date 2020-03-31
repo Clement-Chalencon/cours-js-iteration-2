@@ -16,13 +16,10 @@ body{
 
 
 
-.card-body {
-    background-color: #323232;
+#cardBody {
+    background-color: #323232 !important;
 }
 
-.cardModal{
-    background-color: white !important;
-}
 
 
 #side {

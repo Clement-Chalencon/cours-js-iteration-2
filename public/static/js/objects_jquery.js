@@ -10,26 +10,21 @@ function load_modal(serial) {
     $.get("/data", function (data) {
         for (let key in data.objects) {
             if (data.objects[key].serial == serial) {
-
-                // Solution vanilla KikouLol
-                // document.getElementById('modSerial').innerText = `Numero de serie : ${serial}`;
-                // document.getElementById('modType').innerText = `Type : ${data.objects[key].type}`;
-                // document.getElementById('modImg').innerHTML = `<img class="imgType" " src="/static/images/${data.objects[key].image}">`;
-                // let status = "";
-                // if (data.objects[key].status) {
-                //     status = "connecté"
-                // }
-                // else {
-                //     status = "déconnecté"
-                // }
-                // document.getElementById('modStatus').innerText = ` ${status}`;
-
-                // Solution Vanilla parcours DOM
-                const TABOFCARDS = document.getElementById('modalContent').children;
-                for (const N in TABOFCARDS) {
-                    if (TABOFCARDS[N].nodeName = '');
-
+                
+                // Insertion en Vanilla
+                let tabOfcards = document.getElementById('modalContent').childNodes[3];
+                tabOfcards.childNodes[1].childNodes[3].childNodes[1].textContent=` Numéro de série : ${serial} `;
+                tabOfcards.childNodes[1].childNodes[5].childNodes[1].textContent=` Type : ${data.objects[key].type} `;
+                tabOfcards.childNodes[1].childNodes[7].childNodes[1].childNodes[1].attributes[1].value=`/static/images/${data.objects[key].image}`;
+                if (data.objects[key].status){
+                    tabOfcards.childNodes[1].childNodes[9].childNodes[1].textContent=` Connectayyy `;
+                    tabOfcards.childNodes[1].childNodes[9].attributes[0].nodeValue="card text-white bg-success";
                 }
+                else{
+                    tabOfcards.childNodes[1].childNodes[9].childNodes[1].textContent=` Déconnecté `;
+                    tabOfcards.childNodes[1].childNodes[9].attributes[0].nodeValue="card text-white bg-danger";
+                }
+                
 
             }
         }
@@ -90,6 +85,6 @@ function add_line_to_table(data) {
                 <input type="button" class="btn btn-info detBtn" value="Détail" id="btn${data.serial}" data-toggle="modal" data-target="#modal-details" onclick="load_modal(this.parentElement.parentElement.parentElement.childNodes[1].textContent)">
             </div>
         </td>
-        </tr>`; //  onclick="load_modale(this.parentElement.parentElement.parentElement.childNodes[1].textContent)"
+        </tr>`;
     $("#table_body").append(line);
 }

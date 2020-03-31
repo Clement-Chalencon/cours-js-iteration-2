@@ -96,7 +96,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">Liste des objets</h3>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body" id="cardBody">
                                 <table id="objects_table" class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -131,49 +131,35 @@
                             <!-- <div class="container-fluid"> -->
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h4>informations</h4>
+                                    <h4 class="text-center">informations</h4>
+                                    <div class="card">
+                                        <div class="card-body" id="modSerial">
+                                            Numéro de série
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="card">
-                                            <div class="card-body cardModal" id="modSerial">
-                                                Numéro de série
-                                            </div>
+                                    <div class="card">
+                                        <div class="card-body" id="modType">
+                                            type :
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="card">
-                                            <div class="card-body cardModal" id="modType">
-                                                type : 
-                                            </div>
+                                    <div class="card">
+                                        <div class="card-body" id="modImg">
+                                            <img class="imgType card-img" src="/static/images/arduino_door.jpg">
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="card">
-                                            <div class="card-body cardModal" id="modImg">
-                                               <img class="imgType" src="/static/images/arduino_door.jpg">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="card">
-                                            <div class="card-body cardModal" id="modStatus">
-                                              Connecté
-                                            </div>
+                                    <div class="card">
+                                        <div class="card-body text-center" id="modStatus">
+                                            Connecté
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h5>Yheea</h5>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div>
-                                            <h5 class="col-12">ouahaa</h5>
+                                    <h4 class="text-center">Capteurs</h4>
+                                    <div class="card">
+                                        <div class="card-body" id="modSerial">
+                                            CAPTEUR : <br/>
+                                            type : <br/>
+                                            Unité : <br/>
                                         </div>
                                     </div>
                                 </div>
@@ -209,7 +195,8 @@
 
         <!-- Main Footer -->
         <footer class="main-footer" id="footer">
-            <strong>Copyright &copy; 2020 <a href="https://www.le-campus-numerique.fr/">Le Campus Numérique in the
+            <strong>Copyright &copy; 2020 <a href="https://www.le-campus-numerique.fr/">Le Campus Numérique in
+                    the
                     Alps</a>.</strong> All rights reserved.
             <div class="loat-right d-none d-sm-inline-block">
                 <b>Version</b> 1.0.0
