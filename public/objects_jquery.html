@@ -15,12 +15,13 @@
     <link rel="stylesheet" href="/static/adminlte/dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
     <!-- style CSS -->
     <link rel="stylesheet" href="/static/style.css">
-    <!-- jQuery -->
-    <script src="/static/adminlte/plugins/jquery/jquery.min.js"></script>
-    <!-- script JS -->
-    <script src="/static/js/objects_jquery.js"></script>
+
 </head>
 
 <body>
@@ -155,25 +156,11 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <h4 class="text-center">Capteurs</h4>
-                                    <div class="card">
-                                        <div class="card-body" id="modSerial">
-                                            CAPTEUR : <br/>
-                                            type : <br/>
-                                            Unité : <br/>
-                                        </div>
-                                    </div>
+                                    <!-- Jquery cards insertion -->
                                 </div>
                                 <div class="col-sm-4">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h5>Yheea</h5>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div>
-                                            <h5 class="col-12">ouahaa</h5>
-                                        </div>
-                                    </div>
+                                    <h4>Localisation</h4>
+                                    <div id="mapid"></div>
                                 </div>
                             </div>
                             <!-- </div> -->
@@ -206,11 +193,19 @@
     </div>
 
 
+    <!-- jQuery -->
+    <script src="/static/adminlte/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="/static/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE -->
     <script src="/static/adminlte/dist/js/adminlte.js"></script>
     <script src="/static/adminlte/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- script Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
+    <!-- script JS -->
+    <script src="/static/js/objects_jquery.js"></script>
 </body>
 
 

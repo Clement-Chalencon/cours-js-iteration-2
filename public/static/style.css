@@ -14,12 +14,11 @@ body{
     background-color: #0d7377
 }
 
-
-
 #cardBody {
     background-color: #323232 !important;
 }
 
+#mapid { height: 180px; }
 
 
 #side {
