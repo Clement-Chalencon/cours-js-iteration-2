@@ -44,6 +44,21 @@ function load_default_image(type, serial) {
                 //         break;
                 //     }
                 // }
+
+                // solution Jean
+                // for(const n of document.getElementById('objects_table').childNodes){
+                //     if(n.nodeName=='TBODY'){
+                //         console.log(n);
+                //         for(const c of n.childNodes){
+                //             if(c.nodeName == 'TR'){
+                //                 if(c.childNodes[1].childNodes[0].textContent == data.serial){
+                //                      c.childNodes[3].childNodes[0].setAttribute('src', '/static/images/'+data.default_image);;
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
+
             }
         }
     });
